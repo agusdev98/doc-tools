@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <title>Useful Tools</title>
+    <link href="manifest.webmanifest" rel="manifest">
+    <link href="favicon/favicon.ico" rel="icon" sizes="any">
+    <link href="favicon/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
+    <link href="favicon/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16">
+    <link href="favicon/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles/index.css" rel="stylesheet">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="app-sidebar border-end">
+        <div class="sidebar-brand">
+          <h1 class="h4 mb-1">Useful Tools</h1>
+          <p class="text-secondary mb-0 small">Herramientas simples para limpiar y preparar datos.</p>
+        </div>
+        <nav class="sidebar-nav" aria-label="Herramientas">
+          <button class="sidebar-link active" type="button" data-view-target="dashboard">
+            <i class="bi bi-grid-1x2"></i>
+            Dashboard
+          </button>
+          <button class="sidebar-link" type="button" data-view-target="excel">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+            Excel
+          </button>
+          <button class="sidebar-link" type="button" data-view-target="links">
+            <i class="bi bi-link-45deg"></i>
+            Enlaces
+          </button>
+        </nav>
+      </aside>
+
+      <section class="app-main">
+        <section id="dashboardView" class="app-view dashboard-view">
+          <div class="dashboard-header">
+            <h2 class="h3 mb-1">Dashboard</h2>
+            <p class="text-secondary mb-0">Elegí una herramienta para empezar.</p>
+          </div>
+
+          <div class="tools-grid">
+            <button class="tool-card active-tool" type="button" data-view-target="excel">
+              <span class="tool-card-icon"><i class="bi bi-file-earmark-spreadsheet"></i></span>
+              <span class="tool-card-title">Excel</span>
+              <span class="tool-card-text">Importa CSV, XLS, XLSX y VCF para limpiar contactos, columnas y duplicados.</span>
+            </button>
+            <button class="tool-card active-tool" type="button" data-view-target="links">
+              <span class="tool-card-icon"><i class="bi bi-link-45deg"></i></span>
+              <span class="tool-card-title">Generador de enlaces</span>
+              <span class="tool-card-text">Crea links personalizados de WhatsApp con teléfono y mensaje predefinido.</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="excelView" class="app-view excel-view d-none">
+          <header class="tool-header border-bottom">
+            <div>
+              <h2 class="h4 mb-1">Excel</h2>
+              <p class="text-secondary mb-0">Formatea telefonos de archivos CSV, XLS, XLSX y VCF.</p>
+            </div>
+            <div class="tool-header-actions d-flex flex-wrap gap-2">
+              <input id="fileInput" class="visually-hidden" type="file" accept=".csv,.xls,.xlsx,.vcf">
+              <div class="dropdown">
+                <button id="exportDropdownButton" class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                  Exportar
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button id="exportCsvButton" class="dropdown-item" type="button" disabled>
+                      <i class="bi bi-filetype-csv me-2"></i>
+                      CSV
+                    </button>
+                  </li>
+                  <li>
+                    <button id="exportXlsxButton" class="dropdown-item" type="button" disabled>
+                      <i class="bi bi-file-earmark-spreadsheet me-2"></i>
+                      XLSX
+                    </button>
+                  </li>
+                  <li>
+                    <button id="exportVcfButton" class="dropdown-item" type="button" disabled>
+                      <i class="bi bi-person-vcard me-2"></i>
+                      VCF
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <button id="resetButton" class="btn btn-sm btn-primary" type="button" disabled>
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                Limpiar
+              </button>
+            </div>
+          </header>
+
+          <section class="app-content">
+            <div class="data-panel">
+              <div class="p-3 border-bottom d-flex flex-column flex-md-row gap-2 align-items-md-center justify-content-between">
+                <div>
+                  <h3 class="h6 mb-1">Vista previa</h3>
+                  <p id="tableInfo" class="text-secondary mb-0">Click para importar archivo</p>
+                </div>
+                <div class="preview-tools">
+                  <button id="editColumnsButton" class="btn btn-sm btn-primary" type="button" disabled>
+                    <i class="bi bi-layout-three-columns me-1"></i>
+                    Columnas
+                  </button>
+                  <button id="combineDuplicatesButton" class="btn btn-sm btn-primary" type="button" disabled>
+                    <i class="bi bi-intersect me-1"></i>
+                    Combinar
+                  </button>
+                  <select id="statusFilterSelect" class="form-select form-select-sm" disabled>
+                    <option value="all">Todos</option>
+                    <option value="duplicate">Duplicados</option>
+                    <option value="empty">Vacio</option>
+                  </select>
+                  <select id="sortSelect" class="form-select form-select-sm" disabled>
+                    <option value="original">Orden original</option>
+                    <option value="name-asc">Nombre A-Z</option>
+                    <option value="name-desc">Nombre Z-A</option>
+                    <option value="phone-asc">Numero menor</option>
+                    <option value="phone-desc">Numero mayor</option>
+                    <option value="phone-short">Numero corto</option>
+                    <option value="phone-long">Numero largo</option>
+                  </select>
+                </div>
+              </div>
+              <div id="bulkActionsBar" class="bulk-actions-bar border-bottom px-3 py-2 d-none">
+                <span id="bulkSelectionInfo" class="text-secondary small">0 seleccionadas</span>
+                <div class="bulk-actions-buttons">
+                  <button id="selectAllRowsButton" class="btn btn-sm btn-primary" type="button" disabled>
+                    <i class="bi bi-check-all me-1"></i>
+                    Seleccionar todos
+                  </button>
+                  <button id="bulkArgentinaCodeButton" class="btn btn-sm btn-primary" type="button" disabled>
+                    <i class="bi bi-phone me-1"></i>
+                    Codigo AR
+                  </button>
+                  <button id="bulkDeleteRowsButton" class="btn btn-sm btn-danger" type="button" disabled>
+                    <i class="bi bi-trash me-1"></i>
+                    Eliminar
+                  </button>
+                </div>
+              </div>
+
+              <div class="table-responsive data-table-wrap">
+                <table class="table table-hover align-middle mb-0">
+                  <thead id="previewTableHead"></thead>
+                  <tbody id="previewTableBody">
+                    <tr>
+                      <td class="empty-state empty-import-zone" role="button" tabindex="0">
+                        <i class="bi bi-upload d-block mb-2"></i>
+                        Click para importar archivo
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section id="linksView" class="app-view links-view d-none">
+          <header class="tool-header border-bottom">
+            <div>
+              <h2 class="h4 mb-1">Generador de enlaces</h2>
+              <p class="text-secondary mb-0">Crea links personalizados para WhatsApp con mensaje predefinido.</p>
+            </div>
+          </header>
+
+          <section class="tool-content links-content">
+            <div class="row g-4 link-generator-layout">
+              <div class="col-12 col-lg-5">
+                <div class="link-form">
+                  <div>
+                    <label for="whatsappPhoneInput" class="form-label fw-semibold">Telefono</label>
+                    <input id="whatsappPhoneInput" class="form-control" type="text" inputmode="numeric" placeholder="Ej: 5491130719174">
+                    <div class="form-text">Usa codigo de pais y solo numeros.</div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex align-items-center justify-content-between gap-2">
+                      <label for="whatsappMessageInput" class="form-label fw-semibold mb-0">Mensaje</label>
+                      <div class="dropdown">
+                        <button id="emojiDropdownButton" class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                          <i class="bi bi-emoji-smile me-1"></i>
+                          Emojis
+                        </button>
+                        <div id="emojiDropdownMenu" class="dropdown-menu dropdown-menu-end emoji-menu">
+                          <emoji-picker id="emojiPicker" class="emoji-picker" data-source="vendor/emoji-picker-data/en/emojibase/data.json"></emoji-picker>
+                        </div>
+                      </div>
+                    </div>
+                    <textarea id="whatsappMessageInput" class="form-control link-textarea" placeholder="Ej: Hola, quiero mas informacion."></textarea>
+                  </div>
+
+                  <div class="d-flex flex-wrap gap-2">
+                    <button id="openWhatsappLinkButton" class="btn btn-primary" type="button" disabled>
+                      <i class="bi bi-box-arrow-up-right me-1"></i>
+                      Abrir
+                    </button>
+                    <button id="clearWhatsappLinkButton" class="btn btn-primary" type="button" disabled>
+                      <i class="bi bi-arrow-counterclockwise me-1"></i>
+                      Limpiar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-7">
+                <label for="generatedWhatsappLinkInput" class="form-label fw-semibold">Enlace generado</label>
+                <textarea id="generatedWhatsappLinkInput" class="form-control link-textarea generated-link-output" readonly placeholder="Completa el telefono para generar el enlace."></textarea>
+                <div class="d-flex flex-column flex-sm-row gap-2 align-items-sm-center justify-content-between mt-2">
+                  <p id="whatsappLinkStatus" class="text-secondary small mb-0">Sin enlace generado.</p>
+                  <button id="copyWhatsappLinkButton" class="btn btn-primary" type="button" disabled>
+                    <i class="bi bi-copy me-1"></i>
+                    Copiar enlace
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="modal fade" id="mergeModal" tabindex="-1" aria-labelledby="mergeModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl merge-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h2 class="modal-title h5" id="mergeModalTitle">Combinar duplicados</h2>
+              <p class="text-secondary mb-0 small">Elegi la fila base y edita los campos finales antes de guardar.</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body merge-modal-body">
+            <div class="row g-3 merge-modal-grid">
+              <div class="col-12 col-lg-4 merge-left-panel">
+                <label for="duplicateGroupSelect" class="form-label fw-semibold">Numero duplicado</label>
+                <select id="duplicateGroupSelect" class="form-select"></select>
+                <div id="mergeSourceRows" class="source-list mt-3"></div>
+              </div>
+              <div class="col-12 col-lg-8 merge-fields-panel">
+                <div id="mergeFields" class="row g-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button id="saveMergeButton" type="button" class="btn btn-success">
+              <i class="bi bi-check2 me-1"></i>
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="columnsModal" tabindex="-1" aria-labelledby="columnsModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h2 class="modal-title h5" id="columnsModalTitle">Editar columnas</h2>
+              <p class="text-secondary mb-0 small">Selecciona las columnas que queres eliminar del archivo cargado.</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex justify-content-end mb-3">
+              <button id="addColumnButton" type="button" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-lg me-1"></i>
+                Agregar columna
+              </button>
+            </div>
+            <div id="columnsList" class="columns-list"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button id="deleteColumnsButton" type="button" class="btn btn-danger" disabled>
+              <i class="bi bi-trash me-1"></i>
+              Eliminar columnas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="vendor/jszip/jszip.min.js"></script>
+    <script src="vendor/xlsx/xlsx.full.min.js"></script>
+    <script src="vendor/sortable/Sortable.min.js"></script>
+    <script type="module" src="vendor/emoji-picker/index.js"></script>
+    <script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
